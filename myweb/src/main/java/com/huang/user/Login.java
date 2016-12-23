@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.huang.common.BaseController;
 
@@ -33,5 +34,17 @@ public class Login extends BaseController{
 			reMap.put("result", "error");
 		}
 		return reMap;
+	}
+	@RequestMapping(value="/loginforward")
+	@ResponseBody
+	public ModelAndView loginForward() throws Exception{
+		Map<String,Object> paraMap = getParamData();
+		String userName = (String)paraMap.get("userName");
+		String passwd = (String)paraMap.get("passwd");
+		if("huang".equals(userName) && "huang".equals(passwd)){
+			return new ModelAndView("main");
+		}else{
+			return new ModelAndView("error");
+		}
 	}
 }
