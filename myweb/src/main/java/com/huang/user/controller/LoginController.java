@@ -1,7 +1,8 @@
-package com.huang.user;
+package com.huang.user.controller;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.huang.common.BaseController;
+import com.huang.user.service.LoginService;
 
 /**
  *
@@ -17,24 +19,27 @@ import com.huang.common.BaseController;
  */
 @Controller
 @RequestMapping("/login")
-public class Login extends BaseController{
+public class LoginController extends BaseController{
 	
+	@Resource
+	private LoginService loginserviceimpl;
+	/**
+	 * 登录
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/login")
 	@ResponseBody
 	public Map<String,Object> login() throws Exception{
-		Map<String,Object> reMap = new HashMap<String, Object>();
 		Map<String,Object> paraMap = getParamData();
-		String userName = (String)paraMap.get("userName");
-		String passwd = (String)paraMap.get("passwd");
-		if("huang".equals(userName) && "huang".equals(passwd)){
-			reMap.put("msg", "登录成功");
-			reMap.put("result", "success");
-		}else{
-			reMap.put("msg", "用户名或密码错误");
-			reMap.put("result", "error");
-		}
+		Map<String,Object> reMap = loginserviceimpl.login(paraMap);
 		return reMap;
 	}
+	/**
+	 * 返回页面
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/loginforward")
 	@ResponseBody
 	public ModelAndView loginForward() throws Exception{
