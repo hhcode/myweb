@@ -4,10 +4,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.huang.common.BaseController;
 import com.huang.user.service.LoginService;
@@ -21,6 +21,8 @@ import com.huang.user.service.LoginService;
 @RequestMapping("/login")
 public class LoginController extends BaseController{
 	
+	private static Logger logger = Logger.getLogger(LoginController.class);
+	
 	@Resource
 	private LoginService loginserviceimpl;
 	/**
@@ -32,6 +34,9 @@ public class LoginController extends BaseController{
 	@ResponseBody
 	public Map<String,Object> login() throws Exception{
 		Map<String,Object> paraMap = getParamData();
+		logger.debug("DEBUG ---- 登录，参数：" + paraMap);
+		logger.info("INFO ------ 登录，参数：" + paraMap);
+		logger.error("ERROR ---- 登录，参数：" + paraMap);
 		Map<String,Object> reMap = loginserviceimpl.login(paraMap);
 		return reMap;
 	}
@@ -41,15 +46,14 @@ public class LoginController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/loginforward")
-	@ResponseBody
-	public ModelAndView loginForward() throws Exception{
+	public String loginForward() throws Exception{
 		Map<String,Object> paraMap = getParamData();
 		String userName = (String)paraMap.get("userName");
 		String passwd = (String)paraMap.get("passwd");
 		if("huang".equals(userName) && "huang".equals(passwd)){
-			return new ModelAndView("main");
+			return "main";//new ModelAndView("main");
 		}else{
-			return new ModelAndView("error");
+			return "error";//new ModelAndView("error");
 		}
 	}
 }
