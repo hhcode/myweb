@@ -1,5 +1,6 @@
 package com.huang.common;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import com.huang.util.JsonUtil;
 /**
  * 所有的Controller必须继承此类
  *
@@ -70,7 +73,15 @@ public abstract class BaseController {
 		return paramData;
 	}
 	
-
+	/**
+	 * 获取request中参数组装成Map
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	protected Map<String, Object> getParamJSONMap() throws IOException {
+		return JsonUtil.toHashMap(IOUtils.toString(getRequest().getInputStream(),"UTF-8"));
+	}
 	
 	/**
 	 * 返回json对象
