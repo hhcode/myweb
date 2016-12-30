@@ -5,13 +5,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.huang.common.BaseController;
 import com.huang.user.service.LoginService;
-import com.huang.util.JedisObjectFactory;
 import com.huang.util.JedisOpExecuter;
 
 /**
@@ -40,8 +41,10 @@ public class LoginController extends BaseController{
 		logger.info("INFO ------ 登录，参数：" + paraMap);
 		logger.error("ERROR ---- 登录，参数：" + paraMap);
 		Map<String,Object> reMap = loginserviceimpl.login(paraMap);
+		
 		String key = "huang";
 		String value = "------";
+		
 		JedisOpExecuter.putSingleObject(key, value);
 		logger.info("redis 放入数据，KEY: " + key + " VALUE: " + value);
 		String reValue = (String)JedisOpExecuter.getSingleObject("huang");

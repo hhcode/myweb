@@ -1,9 +1,12 @@
 package com.huang.util;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
+import com.huang.common.Constants;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -16,6 +19,8 @@ import redis.clients.jedis.exceptions.JedisException;
  *
  */
 public class JedisObjectFactory implements ApplicationContextAware {
+	
+	private static Logger logger = Logger.getLogger(JedisObjectFactory.class);
 	
 	private static final long serialVersionUID = -1L;
 	
@@ -51,7 +56,8 @@ public class JedisObjectFactory implements ApplicationContextAware {
 		 jedisPool = getJedisPoolInstance();
 		 Jedis redis = (Jedis)jedisPool.getResource();
 		 if(redis == null){
-			 throw new JedisException("Jedis can not be load from JedisPool ...");
+			 logger.error("Jedis 从 JedisPool 加载失败！");
+			 throw new JedisException("Jedis 从 JedisPool 加载失败！");
 		 }
 		 return redis;
 	 }
@@ -63,10 +69,11 @@ public class JedisObjectFactory implements ApplicationContextAware {
 	  */
 	 public static JedisPool getJedisPoolInstance() throws JedisException{
 		 if(jedisPool == null){
-			 jedisPool = (JedisPool)context.getBean("jedisPool");
+			 jedisPool = (JedisPool)context.getBean(Constants.JEDIS_POOL_BEAN_NAME);
 		 }
 		 if(jedisPool == null){
-			 throw new JedisException("JedisPool can not be initialized ...");
+			 logger.error("JedisPool 初始化失败");
+			 throw new JedisException("JedisPool 初始化失败");
 		 }
 		 
 		 return jedisPool;
