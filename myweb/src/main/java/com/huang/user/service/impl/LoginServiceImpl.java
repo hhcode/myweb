@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.huang.user.mapper.UserMapper;
 import com.huang.user.service.LoginService;
+import com.huang.util.CheckUtil;
 
 /**
  * 用户登录服务实现类
@@ -23,6 +24,14 @@ public class LoginServiceImpl implements LoginService{
 	public Map<String, Object> login(Map<String, Object> paraMap)
 			throws Exception {
 		Map<String,Object> reMap = new HashMap<String, Object>();
+		
+		boolean flag = CheckUtil.checkParaNotNull(paraMap, "userName","passwd");
+		if(!flag){
+			reMap.put("result", "success");
+			reMap.put("msg", "用户名和密码不能为空");
+			return reMap;
+		}
+		
 		Map<String,Object> userMap = userMapper.selectByNameAndPwd(paraMap);
 		if(userMap != null){
 			reMap.put("result", "success");

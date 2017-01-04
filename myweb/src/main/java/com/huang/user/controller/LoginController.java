@@ -40,7 +40,6 @@ public class LoginController extends BaseController{
 		logger.debug("DEBUG ---- 登录，参数：" + paraMap);
 		logger.info("INFO ------ 登录，参数：" + paraMap);
 		logger.error("ERROR ---- 登录，参数：" + paraMap);
-		Map<String,Object> reMap = loginserviceimpl.login(paraMap);
 		
 		String key = "huang";
 		String value = "------";
@@ -50,6 +49,7 @@ public class LoginController extends BaseController{
 		String reValue = (String)JedisOpExecuter.getSingleObject("huang");
 		logger.info("redis 取出数据，KEY: " + key + " VALUE: " + reValue);
 		
+		Map<String,Object> reMap = loginserviceimpl.login(paraMap);
 		return reMap;
 	}
 	/**

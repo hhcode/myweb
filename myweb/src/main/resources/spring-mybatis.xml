@@ -30,6 +30,7 @@
 	<!-- sqlSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />  
 		<!-- 自动扫描pojo别名定义文件 -->
 		<!-- <property name="mapperLocations" value="classpath:com/huang/*/mapper/*.xml"></property> -->
 	</bean>
