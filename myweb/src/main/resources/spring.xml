@@ -17,5 +17,6 @@
 	<bean class="com.huang.common.InitializationApp" scope="singleton"></bean>
 	
 	<!--redis -->
+	<import resource="spring-mybatis.xml" />
 	<import resource="spring-redis.xml" />
 </beans>
