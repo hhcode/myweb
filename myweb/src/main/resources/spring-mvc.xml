@@ -29,4 +29,15 @@
 			</list>
 		</property>
 	</bean> -->
+	
+	 <mvc:interceptors>
+	 <!-- 登录拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*" />
+			<bean class="com.huang.util.LoginInterceptor">
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
 </beans>

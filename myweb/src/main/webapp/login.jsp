@@ -14,7 +14,6 @@
     <link href="resource/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="resource/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="resource/js/login.js"></script>
 
   </head>
 
@@ -24,17 +23,18 @@
 
       <form class="form-signin" role="form">
         <h2 class="form-signin-heading">请登录</h2>
-        <input type="email" class="form-control" placeholder="邮箱地址" required autofocus>
-        <input type="password" class="form-control" placeholder="密码" required>
+        <input type="email" class="form-control" id="emailaddr" placeholder="邮箱地址" required autofocus>
+        <input type="password" class="form-control" id="passwd" placeholder="密码" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> 记住我
           </label>
         </div>
-        <button  type="submit" id="login" onclick="login();">登录</button>
+        <button  type="submit" id="login">登录</button>
       </form>
 
     </div> 
 
   </body>
+   <script type="text/javascript" src="resource/js/login.js"></script>
 </html>

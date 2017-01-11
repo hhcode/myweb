@@ -21,10 +21,10 @@ import com.huang.util.JedisOpExecuter;
  * @since 2016年12月20日 下午2:01:52
  */
 @Controller
-@RequestMapping("/login")
-public class LoginController extends BaseController{
+@RequestMapping("/user")
+public class UserController extends BaseController{
 	
-	private static Logger logger = Logger.getLogger(LoginController.class);
+	private static Logger logger = Logger.getLogger(UserController.class);
 	
 	@Resource
 	private LoginService loginserviceimpl;
