@@ -9,7 +9,7 @@
 
 	<!-- 全局配置 -->
 	<properties>
-		<spring.version>4.3.17.RELEASE</spring.version>
+		<spring.version>4.3.18.RELEASE</spring.version>
 		<jockson.version>2.8.11</jockson.version>
 	</properties>
 
