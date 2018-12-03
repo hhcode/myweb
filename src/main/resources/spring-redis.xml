@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<!-- jedisObjectFactory jedis工厂 -->
+	<bean id="jedisObjectFactory" class="com.huang.util.JedisObjectFactory" />
+
+	<!-- spring-data-redis start -->
+	<!-- redis连接工厂 -->
+	<!-- <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+		p:host-name="${redis.machine.ip}" p:port="${redis.machine.port}" p:password="" 
+		/> -->
+	<!--redis 客户端操作 -->
+	<!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" 
+		p:connection-factory-ref="connectionFactory" /> -->
+	<!-- spring-data-redis end -->
+
+	<!-- redus 集群配置 -->
+	<!-- <bean id="jedis.shardInfo" class="redis.clients.jedis.JedisShardInfo"> 
+		<constructor-arg index="0" value="${redis.machine.ip}" /> <constructor-arg 
+		index="1" value="${redis.machine.port}" type="int" /> </bean> -->
+	<!-- redis 集群连接池 -->
+	<!-- <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"> 
+		<constructor-arg index="0" ref="jedisPoolConfig" /> <constructor-arg index="1"> 
+		<list> <ref bean="jedis.shardInfo" /> </list> </constructor-arg> </bean> -->
+
+	<!-- jedis连接池的配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.machine.maxActive}" />
+		<property name="maxIdle" value="${redis.machine.maxIdle}" />
+		<property name="maxWaitMillis" value="${redis.machine.maxWait}" />
+		<property name="testOnBorrow" value="${redis.machine.testOnBorrow}" />
+	</bean>
+
+	<!-- redis 连接池 -->
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1" value="${redis.machine.ip}"
+			type="java.lang.String" />
+		<constructor-arg index="2" value="${redis.machine.port}"
+			type="int" />
+	</bean>
+
+</beans>
